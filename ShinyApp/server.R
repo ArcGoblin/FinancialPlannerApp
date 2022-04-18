@@ -1,7 +1,7 @@
 # Define server logic 
 server <- function(input, output) {
   
-  freq <- input$freq
+  freq <- reactive(input$freq)
   n_years <- reactive((as.numeric(input$dod[2])-as.numeric(input$dod[1]))/365.25)
   if(freq = "Annual"){
     n_p <- n_years
@@ -15,7 +15,7 @@ server <- function(input, output) {
     inf <- qtr_rate(input$annual_inf)
     income <- input$annualincome/4
   }
-  else if(freq = "Monthly"){
+  else if(freq == "Monthly"){
     n_p <- y2m(n_years)
     ret <- month_rate(input$annual_ret)
     inf <- month_rate(input$annual_inf)
