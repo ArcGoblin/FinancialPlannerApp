@@ -17,7 +17,7 @@ ui <- fluidPage(
     ),
     mainPanel(
       h4("What should my savings be to get a particular monthly income which increases in line with inflation?"),
-      span(textOutput("amount"), style="color:red")
+      span(verbatimTextOutput("amount"), style="color:red")
     )
   )
 )

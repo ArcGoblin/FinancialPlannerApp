@@ -1,37 +1,45 @@
 # Define server logic 
 server <- function(input, output) {
   
-  freq <- reactive(input$freq)
+  freqs <- reactive(input$freq)
   n_years <- reactive((as.numeric(input$dod[2])-as.numeric(input$dod[1]))/365.25)
-  if(freq = "Annual"){
-    n_p <- n_years
-    ret <- perc_rate(input$annual_ret)
-    inf <- perc_rate(input$annual_inf)
-    income <- input$annualincome
-  }
-  else if(freq = "Quarterly"){
-    n_p <- y2q(n_years)
-    ret <- qtr_rate(input$annual_ret)
-    inf <- qtr_rate(input$annual_inf)
-    income <- input$annualincome/4
-  }
-  else if(freq == "Monthly"){
-    n_p <- y2m(n_years)
-    ret <- month_rate(input$annual_ret)
-    inf <- month_rate(input$annual_inf)
-    income <- input$annualincome/12
-  }
-  else {
-    n_p <- y2d(n_years)
-    ret <- day_rate(input$annual_ret)
-    inf <- day_rate(input$annual_inf)
-    income <- input$annualincome/365.25
-  }
-  # calculate the principal amount required from the inputs
-  principal <- reactive(((1-((1+inf())/(1+ret()))^n_p())/(ret() - inf()))*(income()))
+  income <- reactive(input$annualincome)
+  inf <- reactive(perc_rate(input$annual_inf))
+  ret <- reactive(perc_rate(input$annual_ret))
   
-  output$amount <- renderText({
+  # calculate the principal amount required from the inputs
+  
+  #principal <- reactive(income())
+  output$amount <- renderPrint({
     # print amount needed to earn a certain monthly income
-    principal()
+    
+    if(freqs() == "Annual"){
+      n_p <- reactive(n_years())
+      r <- reactive(ret())
+      i <- reactive(inf())
+      principal <- reactive(income()*annuity_factor(r(),i(),n_p()))
+      principal()
+    }
+    else if(freqs() == "Quarterly"){
+      n_p <- reactive(y2q(n_years()))
+      r <- reactive(qtr_rate(ret()))
+      i <- reactive(qtr_rate(inf()))
+      principal <- reactive(income()*annuity_factor(r(),i(),n_p())/4)
+      principal()
+    }
+    else if(freqs() == "Monthly"){
+      n_p <- reactive(y2m(n_years()))
+      r <- reactive(month_rate(ret()))
+      i <- reactive(month_rate(inf()))
+      principal <- reactive(income()*annuity_factor(r(),i(),n_p())/12)
+      principal()
+      }
+    else {
+      n_p <- reactive(y2d(n_years()))
+      r <- reactive(day_rate(ret()))
+      i <- reactive(day_rate(inf()))
+      principal <- reactive(income()*annuity_factor(r(),i(),n_p())/365.25)
+      principal()
+      }
   })
 }

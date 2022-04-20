@@ -13,17 +13,17 @@ perc_rate <- function(r){
 
 #Function to convert annual rate to daily rate
 day_rate <- function(r){
-    ((1+perc_rate(r))^(1/365.25))-1
+    ((1+r)^(1/365.25))-1
     }
 
 #Function to convert annual rate to monthly rate
 month_rate <- function(r){
-  ((1+perc_rate(r))^(1/12))-1
+  ((1+r)^(1/12))-1
 }
 
 #Function to convert annual rate to quarterly rate
 qtr_rate <- function(r){
-  ((1+perc_rate(r))^(1/4))-1
+  ((1+r)^(1/4))-1
 }
 
 #Function to estimate the present value of an increasing annity immediate
@@ -31,7 +31,7 @@ qtr_rate <- function(r){
 #The rate of return r is constant throughout the payment period
 #The number of time periods over which the annuity will be paid
 annuity_factor <- function(r, g, n){
-  ((1-((1+perc_rate(g))/(1+perc_rate(r)))^n)/(perc_rate(r)-perc_rate(g)))  
+  ((1-((1+g)/(1+r))^n)/(r-g))  
 }
 
 #Function to estimate the future value of regular increasing payments
