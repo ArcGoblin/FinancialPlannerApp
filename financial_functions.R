@@ -42,5 +42,5 @@ acc_factor <- function(g, r, n){
   #g = growth rate of payments
   #r = rate of return
   #n = number of periods over which payment will be made
-  (((1+perc_rate(r))^n)-((1+perc_rate(g))^n))/(perc_rate(r)-perc_rate(g))
+  (((1+r)^n)-((1+g)^n))/(r-g)
 }
