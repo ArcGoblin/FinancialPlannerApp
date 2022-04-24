@@ -37,10 +37,11 @@ annuity_factor <- function(r, g, n){
 #Function to estimate the future value of regular increasing payments
 #Payments will increase at a constant rate
 #Rate of return will be constant for the duration of the payments
+#acc_factor = accumulation factor
+#g = growth rate of payments
+#r = rate of return
+#n = number of periods over which payment will be made
 acc_factor <- function(g, r, n){
-  #acc_factor = accumulation factor
-  #g = growth rate of payments
-  #r = rate of return
-  #n = number of periods over which payment will be made
   (((1+r)^n)-((1+g)^n))/(r-g)
 }
+
