@@ -6,7 +6,6 @@ Expenses <- c("Car", "Childcare", "Child's education", "Child's wedding", "Educa
 
 
 shinyUI(fluidPage(
-
     # Application title
     titlePanel("Future expenses"),
 
@@ -26,7 +25,15 @@ shinyUI(fluidPage(
           dateInput("date_single_expense", "Date of expense", value=Sys.Date()+1000)),
         conditionalPanel(
           condition = "input.efreq != 'Once'",
-          dateInput("date_start_expense", "Date of first expense", value=Sys.Date()+1000)),
-        )
-      )
+          dateInput("date_start_expense", "Date of first expense", value=Sys.Date()+1000),
+          dateInput("date_end_expense", "Date of last expense", value=Sys.Date()+10000)),
+      actionButton("add_expense_data", "Add expense", width="50%")
+        ),
+    #mainPanel(
+    #  verbatimTextOutput("eTable")
+    #  ),
+    mainPanel(
+      tableOutput("expense_Table")
+    )
+)
 )
