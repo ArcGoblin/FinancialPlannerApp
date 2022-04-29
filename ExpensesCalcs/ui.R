@@ -27,11 +27,8 @@ shinyUI(fluidPage(
           condition = "input.efreq != 'Once'",
           dateInput("date_start_expense", "Date of first expense", value=Sys.Date()+1000),
           dateInput("date_end_expense", "Date of last expense", value=Sys.Date()+10000)),
-      actionButton("add_expense_data", "Add expense", width="50%")
+      actionButton("add_expense_data", "Add expense", width="100%")
         ),
-    #mainPanel(
-    #  verbatimTextOutput("eTable")
-    #  ),
     mainPanel(
       tableOutput("expense_Table")
     )
