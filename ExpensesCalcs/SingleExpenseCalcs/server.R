@@ -1,5 +1,6 @@
 library(tidyverse)
 library(shiny)
+library(DT)
 
 # Define server logic required for single expense capture
 shinyServer(function(input, output, session) {
@@ -14,12 +15,18 @@ shinyServer(function(input, output, session) {
     e_Table() %>%
       add_row(
         "Expense" = input$expense,
-        "Other Expense" = input$oExpense,
+        "Other Expense" = if(input$expense == "Other"){
+          input$oExpense
+          }
+        else {
+          ""
+        },
         "Expense Amount" = input$eAmount,
         "Date of Expense" = as.integer(input$date_single_expense),  
       ) %>%
       e_Table()
-  })
+    })
+  
   # Display the expense tables
   output$expense_Table <- renderTable(e_Table())
 })

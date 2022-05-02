@@ -1,5 +1,8 @@
 # Define UI for Single Expense capture
+# How to make editable tables: https://www.rstudio.com/blog/dt-0-4/
+# How to make editable tables: https://github.com/rstudio/DT/pull/480
 
+library(DT)
 library(shiny)
 Expenses <- c("Car", "Child's wedding", "Education", "Elderly care", "Holiday", "Home renovation", "Medical payment", "Mortgage downpayment", "Wedding", "Other")
 
@@ -15,7 +18,7 @@ shinyUI(fluidPage(
     # Type out what the "Other" expense is
     conditionalPanel(
       condition = "input.expense == 'Other'",
-      textInput("oExpense", "List other expense")),
+      textInput("oExpense", "List other expense", value="")),
     # Enter the expected amount of the expense
     numericInput("eAmount", "Expense Amount", 0),
     # Enter the expected date of the expense 
